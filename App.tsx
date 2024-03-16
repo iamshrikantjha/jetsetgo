@@ -3,6 +3,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Entypo from "react-native-vector-icons/Entypo";
 import FastImage from 'react-native-fast-image'
+import { fontFamily } from './src/utils/Constants';
 
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
     <NavigationContainer>
       <View>
         <Text style={{
-          fontFamily: 'Lato-Black',
+          fontFamily: fontFamily.LatoHeavy,
           fontSize: 32,
         }}>App</Text>
       </View>
