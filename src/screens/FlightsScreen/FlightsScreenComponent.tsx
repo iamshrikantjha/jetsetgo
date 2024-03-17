@@ -1,14 +1,19 @@
 import { ScrollView, View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { colorPallet, fontFamily } from '../../utils/Constants';
-import { Chip } from 'react-native-paper';
+import { Button, Chip } from 'react-native-paper';
+import axios from 'axios';
+import _ from 'lodash';
 
 
-const GenericCard = () => {
+const GenericCard = ({ duration, origin, destination, price, airline }) => {
+    // console.log(duration);
     return (
-        <View style={{
+        <View 
+        // key={uid}
+        style={{
             backgroundColor: 'white',
             marginHorizontal: wp(3),
             marginTop: wp(3),
@@ -33,6 +38,7 @@ const GenericCard = () => {
 
             </View>
 
+            {/* 2 BOX */}
             <View style={{
                 flex: 4,
                 // backgroundColor: 'skyblue',
@@ -43,16 +49,19 @@ const GenericCard = () => {
                     fontFamily: fontFamily.LatoHeavy,
                     color: colorPallet.dark,
                     marginBottom: wp(1),
-                }}>3:55 pm - 8:15 pm</Text>
+                }}>{duration ? duration : '3:55 pm - 8:15 pm'}</Text>
                 <Text style={{
                     fontSize: wp(3),
                     fontFamily: fontFamily.LatoMedium,
                     color: colorPallet.dark,
                     marginBottom: wp(1.5),
-                }}>AGR-DEL, IndiGo</Text>
+                }}>
+                    {origin || destination || airline ? `${origin} - ${destination}, ${airline}` : 'AGR-DEL, IndiGo'}
+                </Text>
 
             </View>
 
+            {/* 3 BOX */}
             <View style={{
                 flex: 2,
                 // backgroundColor: 'lightgreen',
@@ -78,7 +87,7 @@ const GenericCard = () => {
                     alignSelf: 'flex-end',
                     marginTop: wp(4.5),
                     // marginBottom: wp(1.5),
-                }}>₹ 8,071</Text>
+                }}>{price ? `₹ ${price}` : '₹ NA'}</Text>
 
             </View>
         </View>
@@ -86,10 +95,59 @@ const GenericCard = () => {
 }
 
 const FlightsScreenComponent = () => {
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([])
+
+    const reOrderData = async () => {
+        console.log('Re order started');
+        
+        console.log(data);
+        const temp = _.orderBy(data, 'price', 'asc');
+        console.log('Changed Data', temp);
+        setData(temp);
+
+        console.log('Re order ended');
+    }
+
+    const reOrderData2 = async () => {
+        console.log('Re order started');
+        
+        console.log(data);
+        const temp = _.orderBy(data, 'price', 'desc');
+        console.log('Changed Data', temp);
+        setData(temp);
+
+        console.log('Re order ended');
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const { data: response } = await axios.get('https://api.npoint.io/378e02e8e732bb1ac55b');
+                // _.orderBy(response, 'price', 'asc');
+                // console.log(response);
+
+                setData(response);
+            } catch (error: any) {
+                console.error(error.message);
+            }
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
+
     return (
         <ScrollView style={{
             backgroundColor: '#f2f2f2'
         }}>
+            <Button icon="camera" mode="contained" onPress={reOrderData}>
+                Low to high
+            </Button>
+            <Button icon="camera" mode="contained" onPress={reOrderData2}>
+                High to low
+            </Button>
+
             {/* FILTER CHIPS */}
             <View style={{
                 marginHorizontal: wp(5),
@@ -101,25 +159,45 @@ const FlightsScreenComponent = () => {
                     fontSize: wp(5.5),
                     color: colorPallet.dark,
                 }}>Flights to Indira Gandhi International</Text>
-                
+
                 {/* CHIPS */}
                 <View style={{
                     flexDirection: 'row',
                     marginTop: wp(3),
                     justifyContent: 'space-between',
                 }}>
-                    
+
 
                 </View>
             </View>
 
+            {loading && <Text>Loading</Text>}
+            {!loading && (
+                <View>
+                    <Text>Doing stuff with data</Text>
+                    {data.map(item => (
+                        <View key={item.id}>
+                            <GenericCard 
+                                duration={item.duration}
+                                origin={item.origin}
+                                destination={item.destination}
+                                price={item.price}
+                                airline={item.airline}
+                                seatsAvailable={item.seatsAvailable}
+                            />
+                            {/* <Text>{item.duration}</Text> */}
+                        </View>
+                    ))}
+                </View>
+            )}
+
             {/* GENERIC CARDS */}
+            {/* <GenericCard /> */}
+            {/* <GenericCard />
             <GenericCard />
             <GenericCard />
             <GenericCard />
-            <GenericCard />
-            <GenericCard />
-            <GenericCard />
+            <GenericCard /> */}
 
         </ScrollView>
     )
