@@ -16,7 +16,6 @@ const SpecialCard = ({ labelType, sceneURL, text1, text2 }:{ labelType: string, 
             width: wp(90),
             borderRadius: wp(5),
             position: 'relative',
-            backgroundColor: 'pink',
         }}>
 
             <FastImage

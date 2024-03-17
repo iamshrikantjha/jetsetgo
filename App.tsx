@@ -5,11 +5,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import FastImage from 'react-native-fast-image'
 import { fontFamily } from './src/utils/Constants';
 import { DataTable } from 'react-native-paper';
-import { PaperProvider } from 'react-native-paper';
-import ProfileScreenComponent from './src/screens/ProfileScreen/ProfileScreenComponent';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TripsScreenComponent from './src/screens/TripsScreen/TripsScreenComponent';
-import ExploreScreenComponent from './src/screens/ExploreScreen/ExploreScreenComponent';
+import RootScreen from './src/navigation/RootScreen';
 
 const MyComponent = () => {
   const [page, setPage] = React.useState<number>(0);
@@ -54,7 +50,7 @@ const MyComponent = () => {
 
   return (
     <>
-    <View>
+      <View>
         <MyComponent />
         <Text style={{
           fontFamily: fontFamily.LatoHeavy,
@@ -74,48 +70,40 @@ const MyComponent = () => {
           resizeMode={FastImage.resizeMode.contain}
         />
       </View>
-    <DataTable>
-      <DataTable.Header>
-        <DataTable.Title>Dessert</DataTable.Title>
-        <DataTable.Title numeric>Calories</DataTable.Title>
-        <DataTable.Title numeric>Fat</DataTable.Title>
-      </DataTable.Header>
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>Dessert</DataTable.Title>
+          <DataTable.Title numeric>Calories</DataTable.Title>
+          <DataTable.Title numeric>Fat</DataTable.Title>
+        </DataTable.Header>
 
-      {items.slice(from, to).map((item) => (
-        <DataTable.Row key={item.key}>
-          <DataTable.Cell>{item.name}</DataTable.Cell>
-          <DataTable.Cell numeric>{item.calories}</DataTable.Cell>
-          <DataTable.Cell numeric>{item.fat}</DataTable.Cell>
-        </DataTable.Row>
-      ))}
+        {items.slice(from, to).map((item) => (
+          <DataTable.Row key={item.key}>
+            <DataTable.Cell>{item.name}</DataTable.Cell>
+            <DataTable.Cell numeric>{item.calories}</DataTable.Cell>
+            <DataTable.Cell numeric>{item.fat}</DataTable.Cell>
+          </DataTable.Row>
+        ))}
 
-      <DataTable.Pagination
-        page={page}
-        numberOfPages={Math.ceil(items.length / itemsPerPage)}
-        onPageChange={(page) => setPage(page)}
-        label={`${from + 1}-${to} of ${items.length}`}
-        numberOfItemsPerPageList={numberOfItemsPerPageList}
-        numberOfItemsPerPage={itemsPerPage}
-        onItemsPerPageChange={onItemsPerPageChange}
-        showFastPaginationControls
-        selectPageDropdownLabel={'Rows per page'}
-      />
-    </DataTable>
+        <DataTable.Pagination
+          page={page}
+          numberOfPages={Math.ceil(items.length / itemsPerPage)}
+          onPageChange={(page) => setPage(page)}
+          label={`${from + 1}-${to} of ${items.length}`}
+          numberOfItemsPerPageList={numberOfItemsPerPageList}
+          numberOfItemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+          showFastPaginationControls
+          selectPageDropdownLabel={'Rows per page'}
+        />
+      </DataTable>
     </>
   );
 };
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <PaperProvider>
-      <SafeAreaProvider>
-        {/* <ProfileScreenComponent /> */}
-        {/* <TripsScreenComponent /> */}
-        <ExploreScreenComponent />
-      </SafeAreaProvider>
-      </PaperProvider>
-    </NavigationContainer>
+    <RootScreen />
   );
 };
 
