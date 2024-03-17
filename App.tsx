@@ -8,6 +8,7 @@ import { DataTable } from 'react-native-paper';
 import { PaperProvider } from 'react-native-paper';
 import ProfileScreenComponent from './src/screens/ProfileScreen/ProfileScreenComponent';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import TripsScreenComponent from './src/screens/TripsScreen/TripsScreenComponent';
 
 const MyComponent = () => {
   const [page, setPage] = React.useState<number>(0);
@@ -108,7 +109,8 @@ const App = () => {
     <NavigationContainer>
       <PaperProvider>
       <SafeAreaProvider>
-        <ProfileScreenComponent />
+        {/* <ProfileScreenComponent /> */}
+        <TripsScreenComponent />
       </SafeAreaProvider>
       </PaperProvider>
     </NavigationContainer>
