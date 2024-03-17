@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Avatar, ProgressBar } from 'react-native-paper';
-import { fontFamily } from '../../utils/Constants';
+import { colorPallet, fontFamily } from '../../utils/Constants';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CardComponent = () => {
@@ -25,7 +25,7 @@ const CardComponent = () => {
       <Text style={{
             fontFamily: fontFamily.LatoHeavy,
             fontSize: wp(4.5),
-            color: 'black',
+            color: colorPallet.dark,
           }}>Your details</Text>
       </View>
       
@@ -48,9 +48,13 @@ const ProfileScreenComponent = () => {
         <Text style={{
           fontFamily: fontFamily.LatoHeavy,
           fontSize: wp(8),
-          color: 'black',
+          color: colorPallet.dark,
         }}>Profile</Text>
-        <Avatar.Text size={wp(30)} label="S" labelStyle={{
+        <Avatar.Text size={wp(30)} label="S"
+        style={{
+          backgroundColor: colorPallet.primary,
+        }}
+        labelStyle={{
           fontFamily: fontFamily.LatoMedium,
           fontSize: wp(20),
         }} />
@@ -65,7 +69,7 @@ const ProfileScreenComponent = () => {
         <Text style={{
           fontFamily: fontFamily.LatoHeavy,
           fontSize: wp(5.5),
-          color: 'black',
+          color: colorPallet.dark,
         }}>Profile set-up</Text>
       </View>
 
@@ -84,24 +88,24 @@ const ProfileScreenComponent = () => {
           <Text style={{
             fontFamily: fontFamily.LatoHeavy,
             fontSize: wp(4.5),
-            color: 'black',
+            color: colorPallet.dark,
           }}>Only 2 steps to go</Text>
 
           <Text style={{
             fontFamily: fontFamily.LatoHeavy,
             fontSize: wp(4.5),
-            color: '#4d4dff',
+            color: colorPallet.primary,
           }}>Finish set-up</Text>
         </View>
 
-        <ProgressBar progress={0.5} color={'#4d4dff'} style={{
+        <ProgressBar progress={0.5} color={colorPallet.primary} style={{
           marginVertical: wp(5),
         }} />
 
         <Text style={{
           fontFamily: fontFamily.LatoSemibold,
           fontSize: wp(4.5),
-          color: '#4d4dff',
+          color: colorPallet.primary,
         }}>Complete the steps to book faster and find the best deals.</Text>
 
       </View>
@@ -115,7 +119,7 @@ const ProfileScreenComponent = () => {
         <Text style={{
           fontFamily: fontFamily.LatoHeavy,
           fontSize: wp(5.5),
-          color: 'black',
+          color: colorPallet.dark,
         }}>Manage your account</Text>
       </View>
 

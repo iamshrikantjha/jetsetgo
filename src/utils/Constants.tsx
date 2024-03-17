@@ -7,3 +7,8 @@ export const fontFamily = {
     LatoLight: 'Lato-Light',
     LatoSemibold: 'Lato-Semibold',
 }
+
+export const colorPallet = {
+    primary: '#0062E3',
+    dark: '#333333',
+}
