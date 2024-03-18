@@ -208,9 +208,27 @@ const FlightsScreenComponent = ({ navigation }) => {
                     marginBottom: wp(4),
                     justifyContent: 'space-between',
                 }}>
-                    <Chip icon="chevron-down-circle" onPress={reOrderData}>Ascending</Chip>
-                    <Chip icon="chevron-up-circle" onPress={reOrderData2}>Descending</Chip>
-                    <Chip icon="lock-reset" onPress={resetData}>Reset Filter</Chip>
+                    <Chip icon="chevron-down-circle" onPress={reOrderData} elevated={true} compact={true} 
+                    textStyle={{
+                        fontSize: wp(3.1)
+                    }}
+                    style={{
+                        width: 'auto'
+                    }}>Ascending</Chip>
+                    <Chip icon="chevron-up-circle" onPress={reOrderData2} elevated={true} compact={true} 
+                    textStyle={{
+                        fontSize: wp(3.1)
+                    }}
+                    style={{
+                        width: 'auto'
+                    }}>Descending</Chip>
+                    <Chip icon="lock-reset" onPress={resetData} elevated={true} compact={true} 
+                    textStyle={{
+                        fontSize: wp(3.1)
+                    }}
+                    style={{
+                        width: 'auto'
+                    }}>Reset Filter</Chip>
                 </View>
             </View>
 
@@ -267,7 +285,7 @@ const FlightsScreenComponent = ({ navigation }) => {
             <GenericCard />
             <GenericCard /> */}
             <View style={{
-                height: hp(5),
+                height: hp(10),
             }}>
 
             </View>
