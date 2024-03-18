@@ -144,8 +144,8 @@ const FlightsScreenComponent = () => {
     }
 
     const handleonChnageText = (e: any) => {
-        setSearchQuery(e),
-            filterData()
+        setSearchQuery(e);
+        filterData();
     }
 
     useEffect(() => {
@@ -216,8 +216,6 @@ const FlightsScreenComponent = () => {
                     <Chip icon="chevron-down-circle" onPress={reOrderData}>Ascending</Chip>
                     <Chip icon="chevron-up-circle" onPress={reOrderData2}>Descending</Chip>
                     <Chip icon="lock-reset" onPress={resetData}>Reset Filter</Chip>
-
-
                 </View>
             </View>
 
