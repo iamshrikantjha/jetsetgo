@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { colorPallet, fontFamily } from '../../utils/Constants';
-import { Button, Appbar, Searchbar, Snackbar } from 'react-native-paper';
+import { Button, Appbar, Searchbar, Snackbar, Chip } from 'react-native-paper';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -139,6 +139,10 @@ const FlightsScreenComponent = () => {
 
     }
 
+    const resetData = () => {
+        setData([...backup]);
+    }
+
     const handleonChnageText = (e: any) => {
         setSearchQuery(e),
             filterData()
@@ -183,17 +187,18 @@ const FlightsScreenComponent = () => {
             />
 
 
-            <Button icon="camera" mode="contained" onPress={reOrderData}>
+            {/* <Button icon="camera" mode="contained" onPress={reOrderData}>
                 Low to high
             </Button>
             <Button icon="camera" mode="contained" onPress={reOrderData2}>
                 High to low
-            </Button>
+            </Button> */}
 
             {/* FILTER CHIPS */}
             <View style={{
                 marginHorizontal: wp(5),
-                marginTop: wp(5)
+                marginTop: wp(5),
+                flexDirection: 'column',
             }}>
                 {/* LABEL */}
                 <Text style={{
@@ -208,6 +213,9 @@ const FlightsScreenComponent = () => {
                     marginTop: wp(3),
                     justifyContent: 'space-between',
                 }}>
+                    <Chip icon="chevron-down-circle" onPress={reOrderData}>Ascending</Chip>
+                    <Chip icon="chevron-up-circle" onPress={reOrderData2}>Descending</Chip>
+                    <Chip icon="lock-reset" onPress={resetData}>Reset Filter</Chip>
 
 
                 </View>
