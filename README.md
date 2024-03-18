@@ -13,6 +13,9 @@ options, and customize preferences effortlessly.
 - Added custom color pallet for demo.
 - The react-native app is fully responsive as it will work on all devices.
 - Performant images + lists + icons by using better third party alternatives.
+- Usage of Typescript.
+- Usage of latest react-native version 0.73.
+- Use of pnpm as package manager
 
 
 ## Screenshots
