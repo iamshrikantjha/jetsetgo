@@ -6,7 +6,7 @@ import { colorPallet, fontFamily } from '../../utils/Constants';
 import { Button, Appbar, Searchbar, Snackbar, Chip } from 'react-native-paper';
 import axios from 'axios';
 import _ from 'lodash';
-
+import { FlashList } from '@shopify/flash-list';
 
 const GenericCard = ({ duration, origin, destination, price, airline }) => {
     // console.log(duration);
@@ -173,31 +173,27 @@ const FlightsScreenComponent = () => {
             {/* APPBAR */}
             <Appbar.Header>
                 <Appbar.BackAction onPress={() => { }} />
-                <Appbar.Content title="Title" />
-                <Appbar.Action icon="magnify" onPress={filterData} />
+                <Appbar.Content title="JetSetGo - Easy Flights Now" />
+                {/* <Appbar.Action icon="magnify" onPress={filterData} /> */}
             </Appbar.Header>
 
             <Searchbar
                 placeholder="Search"
                 onChangeText={(e) => handleonChnageText(e)}
                 value={searchQuery}
-                traileringIcon={"magnify"}
+                // traileringIcon={"magnify"}
                 onSubmitEditing={filterData}
+                style={{
+                    marginHorizontal: wp(5),
+                    marginTop: wp(4),
+                }}
             // onTraileringIconPress={() => console.log(searchQuery)}
             />
-
-
-            {/* <Button icon="camera" mode="contained" onPress={reOrderData}>
-                Low to high
-            </Button>
-            <Button icon="camera" mode="contained" onPress={reOrderData2}>
-                High to low
-            </Button> */}
 
             {/* FILTER CHIPS */}
             <View style={{
                 marginHorizontal: wp(5),
-                marginTop: wp(5),
+                marginTop: wp(4),
                 flexDirection: 'column',
             }}>
                 {/* LABEL */}
@@ -210,7 +206,8 @@ const FlightsScreenComponent = () => {
                 {/* CHIPS */}
                 <View style={{
                     flexDirection: 'row',
-                    marginTop: wp(3),
+                    marginTop: wp(5),
+                    marginBottom: wp(4),
                     justifyContent: 'space-between',
                 }}>
                     <Chip icon="chevron-down-circle" onPress={reOrderData}>Ascending</Chip>
@@ -232,11 +229,28 @@ const FlightsScreenComponent = () => {
                                 airline={item.airline}
                                 seatsAvailable={item.seatsAvailable}
                             />
-                            {/* <Text>{item.duration}</Text> */}
                         </View>
                     ))}
                 </View>
             )}
+
+
+            {/* <FlashList
+                data={data}
+                renderItem={({ item }) => (
+                    <View key={item.id}>
+                        <GenericCard
+                            duration={item.duration}
+                            origin={item.origin}
+                            destination={item.destination}
+                            price={item.price}
+                            airline={item.airline}
+                            seatsAvailable={item.seatsAvailable}
+                        />
+                    </View>
+                )}
+                estimatedItemSize={20}
+            /> */}
 
             {/* GENERIC CARDS */}
             {/* <GenericCard /> */}
@@ -245,7 +259,11 @@ const FlightsScreenComponent = () => {
             <GenericCard />
             <GenericCard />
             <GenericCard /> */}
+            <View style={{
+                height: hp(5),
+            }}>
 
+            </View>
         </ScrollView>
     )
 }
