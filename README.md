@@ -15,7 +15,7 @@ options, and customize preferences effortlessly.
 - Performant images + lists + icons by using better third party alternatives.
 - Usage of Typescript.
 - Usage of latest react-native version 0.73.
-- Use of pnpm as package manager
+- Use of pnpm as package manager.
 
 
 ## Screenshots
