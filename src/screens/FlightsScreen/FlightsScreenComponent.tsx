@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { colorPallet, fontFamily } from '../../utils/Constants';
-import { Button, Chip } from 'react-native-paper';
+import { Button, Appbar, Searchbar, Snackbar } from 'react-native-paper';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -11,18 +11,18 @@ import _ from 'lodash';
 const GenericCard = ({ duration, origin, destination, price, airline }) => {
     // console.log(duration);
     return (
-        <View 
-        // key={uid}
-        style={{
-            backgroundColor: 'white',
-            marginHorizontal: wp(3),
-            marginTop: wp(3),
-            borderRadius: wp(2),
-            padding: wp(4),
-            elevation: 5,
-            flexDirection: 'row',
-            flex: 1,
-        }}>
+        <View
+            // key={uid}
+            style={{
+                backgroundColor: 'white',
+                marginHorizontal: wp(3),
+                marginTop: wp(3),
+                borderRadius: wp(2),
+                padding: wp(4),
+                elevation: 5,
+                flexDirection: 'row',
+                flex: 1,
+            }}>
             {/* 1 BOX */}
             <View style={{
                 flex: 1,
@@ -96,28 +96,52 @@ const GenericCard = ({ duration, origin, destination, price, airline }) => {
 
 const FlightsScreenComponent = () => {
     const [loading, setLoading] = useState(true);
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
+    const [backup, setBackup] = useState([...data]);
+    const [searchQuery, setSearchQuery] = useState('');
+
 
     const reOrderData = async () => {
-        console.log('Re order started');
-        
-        console.log(data);
+        // console.log('Re order started');
+
+        // console.log(data);
         const temp = _.orderBy(data, 'price', 'asc');
-        console.log('Changed Data', temp);
+        // console.log('Changed Data', temp);
         setData(temp);
 
-        console.log('Re order ended');
+        // console.log('Re order ended');
     }
 
     const reOrderData2 = async () => {
-        console.log('Re order started');
-        
-        console.log(data);
+        // console.log('Re order started');
+
+        // console.log(data);
         const temp = _.orderBy(data, 'price', 'desc');
-        console.log('Changed Data', temp);
+        // console.log('Changed Data', temp);
         setData(temp);
 
-        console.log('Re order ended');
+        // console.log('Re order ended');
+    }
+
+    const filterData = () => {
+        setData([...backup]);
+        if (!searchQuery.length) {
+
+        } else {
+            // const temp = _.filter(backup, el => el?.airline?.toLowerCase() === searchQuery.toLowerCase());
+            const temp = backup.filter(el =>
+                el?.airline?.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            console.log('Here airlines', temp);
+
+            setData(temp);
+        }
+
+    }
+
+    const handleonChnageText = (e: any) => {
+        setSearchQuery(e),
+            filterData()
     }
 
     useEffect(() => {
@@ -126,9 +150,10 @@ const FlightsScreenComponent = () => {
             try {
                 const { data: response } = await axios.get('https://api.npoint.io/378e02e8e732bb1ac55b');
                 // _.orderBy(response, 'price', 'asc');
-                // console.log(response);
+                console.log(response);
 
                 setData(response);
+                setBackup(response);
             } catch (error: any) {
                 console.error(error.message);
             }
@@ -139,8 +164,25 @@ const FlightsScreenComponent = () => {
 
     return (
         <ScrollView style={{
-            backgroundColor: '#f2f2f2'
+            // backgroundColor: '#f2f2f2'
         }}>
+            {/* APPBAR */}
+            <Appbar.Header>
+                <Appbar.BackAction onPress={() => { }} />
+                <Appbar.Content title="Title" />
+                <Appbar.Action icon="magnify" onPress={filterData} />
+            </Appbar.Header>
+
+            <Searchbar
+                placeholder="Search"
+                onChangeText={(e) => handleonChnageText(e)}
+                value={searchQuery}
+                traileringIcon={"magnify"}
+                onSubmitEditing={filterData}
+            // onTraileringIconPress={() => console.log(searchQuery)}
+            />
+
+
             <Button icon="camera" mode="contained" onPress={reOrderData}>
                 Low to high
             </Button>
@@ -174,10 +216,9 @@ const FlightsScreenComponent = () => {
             {loading && <Text>Loading</Text>}
             {!loading && (
                 <View>
-                    <Text>Doing stuff with data</Text>
-                    {data.map(item => (
+                    {data?.map(item => (
                         <View key={item.id}>
-                            <GenericCard 
+                            <GenericCard
                                 duration={item.duration}
                                 origin={item.origin}
                                 destination={item.destination}

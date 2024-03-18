@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FlightsScreenComponent from '../screens/FlightsScreen/FlightsScreenComponent';
+import TripsScreenComponent from '../screens/TripsScreen/TripsScreenComponent';
 
 const ScreensStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -96,6 +97,7 @@ const MainScreen = () => {
             {/* <ScreensStack.Screen name="ProfileScreen" component={ProfileScreenComponent} /> */}
             {/* <ScreensStack.Screen name="ExploreScreen" component={ExploreScreenComponent} /> */}
             <ScreensStack.Screen name="FlightScreen" component={FlightsScreenComponent} />
+            {/* <ScreensStack.Screen name="TripsScreen" component={TripsScreenComponent} /> */}
 
             {/* <ScreensStack.Screen name="CustomBottomTabs" component={CustomBottomTabs} /> */}
 
