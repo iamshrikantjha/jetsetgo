@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { colorPallet, fontFamily } from '../../utils/Constants';
-import { Button, Appbar, Searchbar, Snackbar, Chip } from 'react-native-paper';
+import { Button, Appbar, Searchbar, Snackbar, Chip, ActivityIndicator } from 'react-native-paper';
 import axios from 'axios';
 import _ from 'lodash';
-import { FlashList } from '@shopify/flash-list';
+// import { FlashList } from '@shopify/flash-list';
 
-const GenericCard = ({ duration, origin, destination, price, airline }) => {
+const GenericCard = ({ duration, origin, destination, price, airline }: any) => {
     // console.log(duration);
     return (
         <View
@@ -94,7 +94,7 @@ const GenericCard = ({ duration, origin, destination, price, airline }) => {
     )
 }
 
-const FlightsScreenComponent = () => {
+const FlightsScreenComponent = ({ navigation }) => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [backup, setBackup] = useState([...data]);
@@ -172,23 +172,20 @@ const FlightsScreenComponent = () => {
         }}>
             {/* APPBAR */}
             <Appbar.Header>
-                <Appbar.BackAction onPress={() => { }} />
+                <Appbar.BackAction onPress={() => navigation.goBack()} />
                 <Appbar.Content title="JetSetGo - Easy Flights Now" />
-                {/* <Appbar.Action icon="magnify" onPress={filterData} /> */}
             </Appbar.Header>
 
             <Searchbar
                 placeholder="Search"
                 onChangeText={(e) => handleonChnageText(e)}
                 value={searchQuery}
-                // traileringIcon={"magnify"}
                 onSubmitEditing={filterData}
                 style={{
                     marginHorizontal: wp(5),
                     marginTop: wp(4),
                 }}
                 onClearIconPress={resetData}
-            // onTraileringIconPress={() => console.log(searchQuery)}
             />
 
             {/* FILTER CHIPS */}
@@ -217,7 +214,16 @@ const FlightsScreenComponent = () => {
                 </View>
             </View>
 
-            {loading && <Text>Loading</Text>}
+            {loading && 
+                <View style={{
+                    width: wp(100),
+                    height: hp(55),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <ActivityIndicator animating={true} size={'large'} color={colorPallet.primary} />
+                </View>
+            }
             {!loading && (
                 <View>
                     {data?.map(item => (
