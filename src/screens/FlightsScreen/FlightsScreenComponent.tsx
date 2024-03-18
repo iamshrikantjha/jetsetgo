@@ -187,6 +187,7 @@ const FlightsScreenComponent = () => {
                     marginHorizontal: wp(5),
                     marginTop: wp(4),
                 }}
+                onClearIconPress={resetData}
             // onTraileringIconPress={() => console.log(searchQuery)}
             />
 

@@ -1,10 +1,11 @@
-import { PlatformColor, ScrollView, Text, View } from 'react-native'
+import { PlatformColor, Pressable, ScrollView, Text, View } from 'react-native'
 import React from 'react'
 import { colorPallet, fontFamily } from '../../utils/Constants';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Avatar } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
+import { NavigationContainer } from '@react-navigation/native';
 
 const SpecialCard = ({ labelType, sceneURL, text1, text2 }:{ labelType: string, sceneURL: string, text1: string, text2: string }) => {
     return (
@@ -55,7 +56,7 @@ const SpecialCard = ({ labelType, sceneURL, text1, text2 }:{ labelType: string, 
     )
 }
 
-const ExploreScreenComponent = () => {
+const ExploreScreenComponent = ({ navigation }) => {
     return (
         <ScrollView>
             {/* HEADER */}
@@ -86,7 +87,7 @@ const ExploreScreenComponent = () => {
                 justifyContent: 'space-around',
                 marginVertical: hp(5),
             }}>
-                <View style={{
+                <Pressable onPress={() => navigation.navigate('FlightsScreenComponent')} style={{
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}>
@@ -99,7 +100,9 @@ const ExploreScreenComponent = () => {
                         paddingVertical: wp(3),
                         fontSize: wp(4.5),
                     }}>Flights</Text>
-                </View>
+                </Pressable>
+
+
                 <View style={{
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -114,6 +117,9 @@ const ExploreScreenComponent = () => {
                         fontSize: wp(4.5),
                     }}>Hotels</Text>
                 </View>
+
+
+
                 <View style={{
                     flexDirection: 'column',
                     alignItems: 'center',

@@ -138,7 +138,9 @@ const ProfileScreenComponent = () => {
         <CardComponent />
 
       </View>
-
+      <View style={{
+        height: hp(10)
+      }} />
 
 
     </ScrollView>

@@ -1,69 +1,93 @@
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreenComponent from '../screens/ProfileScreen/ProfileScreenComponent';
 import ExploreScreenComponent from '../screens/ExploreScreen/ExploreScreenComponent';
 
-import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FlightsScreenComponent from '../screens/FlightsScreen/FlightsScreenComponent';
 import TripsScreenComponent from '../screens/TripsScreen/TripsScreenComponent';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ScreensStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
-export const CustomBottomTabs = () => {
+const FlightsStack = () => {
+    return (
+        <ScreensStack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+            initialRouteName='ExploreScreenComponent'
+        >
+            <ScreensStack.Screen
+                name="ExploreScreenComponent"
+                component={ExploreScreenComponent}
+                options={Platform.OS === 'android' ? { animationEnabled: false } : {}}
+            />
+            <ScreensStack.Screen
+                name="FlightsScreenComponent"
+                component={FlightsScreenComponent}
+                options={Platform.OS === 'android' ? { animationEnabled: false } : {}}
+            />
+        </ScreensStack.Navigator>
+    );
+}
+
+
+const CustomBottomTabs = () => {
     return (
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
+                tabBarStyle: {
+                    position: 'absolute',
+                    height: wp(15),
+
+                },
+                tabBarIconStyle: {
+                    backgroundColor: 'pink'
+                }
             }}
-            tabBar={({ navigation, state, descriptors, insets }) => (
-                <BottomNavigation.Bar
-                    navigationState={state}
-                    safeAreaInsets={insets}
-                    onTabPress={({ route, preventDefault }) => {
-                        const event = navigation.emit({
-                            type: 'tabPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                        });
-
-                        if (event.defaultPrevented) {
-                            preventDefault();
-                        } else {
-                            navigation.dispatch({
-                                ...CommonActions.navigate(route.name, route.params),
-                                target: state.key,
-                            });
-                        }
-                    }}
-                    renderIcon={({ route, focused, color }) => {
-                        const { options } = descriptors[route.key];
-                        if (options.tabBarIcon) {
-                            return options.tabBarIcon({ focused, color, size: 24 });
-                        }
-
-                        return null;
-                    }}
-                    getLabelText={({ route }: any) => {
-                        const { options } = descriptors[route.key];
-                        const label =
-                            options.tabBarLabel !== undefined
-                                ? options.tabBarLabel
-                                : options.title !== undefined
-                                    ? options.title
-                                    : route.title;
-
-                        return label;
-                    }}
-                />
-            )}
         >
             <Tab.Screen
+                name="Flights"
+                component={FlightsStack}
+                options={{
+                    tabBarShowLabel: false,
+                    // tabBarLabel: 'Settings',
+                    tabBarIcon: ({ color, size }) => {
+                        return <MaterialIcons name="explore" size={size} color={color} />;
+                    },
+                }}
+            />
+            <Tab.Screen
+                name="TripsScreen"
+                component={TripsScreenComponent}
+                options={{
+                    tabBarShowLabel: false,
+                    // tabBarLabel: 'Settings',
+                    tabBarIcon: ({ color, size }) => {
+                        return <FontAwesome name="tripadvisor" size={size} color={color} />;
+                    },
+                }}
+            />
+            <Tab.Screen
+                name="ProfileScreen"
+                component={ProfileScreenComponent}
+                options={{
+                    tabBarShowLabel: false,
+                    // tabBarLabel: 'Settings',
+                    tabBarIcon: ({ color, size }) => {
+                        return <FontAwesome name="user-circle" size={size} color={color} />;
+                    },
+                }}
+            />
+
+            {/* <Tab.Screen
                 name="Home"
                 component={ProfileScreenComponent}
                 options={{
@@ -82,7 +106,7 @@ export const CustomBottomTabs = () => {
                         return <Icon name="cog" size={size} color={color} />;
                     },
                 }}
-            />
+            /> */}
         </Tab.Navigator>
     );
 }
@@ -94,12 +118,13 @@ const MainScreen = () => {
             screenOptions={{
                 headerShown: false,
             }}>
-            {/* <ScreensStack.Screen name="ProfileScreen" component={ProfileScreenComponent} /> */}
-            {/* <ScreensStack.Screen name="ExploreScreen" component={ExploreScreenComponent} /> */}
-            <ScreensStack.Screen name="FlightScreen" component={FlightsScreenComponent} />
-            {/* <ScreensStack.Screen name="TripsScreen" component={TripsScreenComponent} /> */}
+            <ScreensStack.Screen name="CustomBottomTabs" component={CustomBottomTabs} />
 
-            {/* <ScreensStack.Screen name="CustomBottomTabs" component={CustomBottomTabs} /> */}
+            <ScreensStack.Screen name="ProfileScreen" component={ProfileScreenComponent} />
+            <ScreensStack.Screen name="ExploreScreen" component={ExploreScreenComponent} />
+            <ScreensStack.Screen name="FlightScreen" component={FlightsScreenComponent} />
+            <ScreensStack.Screen name="TripsScreen" component={TripsScreenComponent} />
+
 
             {/* <ScreensStack.Screen name="StartupScreen" component={StartupScreen} />
         <ScreensStack.Screen name="AuthScreen" component={AuthScreen} />
